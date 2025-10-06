@@ -17,6 +17,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+ JUST ADDING A LINE TO CHECK CHECK
 """
 
 import json
@@ -60,7 +61,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'ui/impphotos.ui'))
 
 FIELDS = ['fid', 'ID', 'Name', 'Date', 'Time', 'Lon', 'Lat', 'Altitude', 'North', 'Azimuth', 'Cam. Maker',
-          'Cam. Model', 'Title', 'Comment', 'Path', 'RelPath', 'Timestamp', 'Images', 'Link', 'Description']
+          'Cam. Model', 'Title', 'Comment', 'Path', 'RelPath', 'Timestamp', 'Images', 'Link', 'Description','FocalLength35mm']
 
 SUPPORTED_PHOTOS_EXTENSIONS = ['jpg', 'jpeg', 'JPG', 'JPEG']
 
@@ -270,7 +271,8 @@ class ImportPhotos:
             '&field=Altitude:double&field=Cam.Mak:string&field=Cam.Mod:string'
             '&field=Title:string&field=Comment:string&field=Path:string'
             '&field=RelPath:string&field=Timestamp:string&field=Images:string'
-            '&field=Link:string&field=Description:string',
+            '&field=Link:string&field=Description:string'
+            '&field=FocalLength35mm:string',
             'temp_layer',
             'memory')
         self.temp_layer.setRenderer(QgsFeatureRenderer.defaultRenderer(QgsWkbTypes.PointGeometry))
@@ -777,6 +779,13 @@ class ImportPhotos:
                         user_comm = ''
                 except:
                     user_comm = ''
+                try:
+                    if 'EXIF FocalLengthIn35mmFilm' in tags: 
+                        FocalLength35mm = tags['EXIF FocalLengthIn35mmFilm'].printable
+                    else:
+                        FocalLength35mm = ''
+                except:
+                    FocalLength35mm = ''
 
             elif CHECK_MODULE == 'PIL':
                 a = {}
@@ -864,7 +873,8 @@ class ImportPhotos:
                     'Title': str(title), 'Comment': user_comm,
                     'Path': photo_path, 'RelPath': rel_path,
                     'Timestamp': timestamp, 'Images': ImagesSrc, 'Link': url,
-                    'Description': description
+                    'Description': description,
+                    'FocalLength35mm': FocalLength35mm
                 },
                 "geometry": {
                     "coordinates": [lon, lat],
@@ -885,7 +895,9 @@ class ImportPhotos:
                             'Title': str(title), 'Comment': user_comm,
                             'Path': photo_path, 'RelPath': rel_path,
                             'Timestamp': timestamp, 'Images': ImagesSrc, 'Link': url,
-                            'Description': description
+                            'Description': description,
+                            'FocalLength35mm': FocalLength35mm
+
                         },
                         "geometry": {
                             "coordinates": [lon, lat],
