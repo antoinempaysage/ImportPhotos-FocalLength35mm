@@ -4,7 +4,7 @@
  ImportPhotos
                                  A QGIS plugin
  Import photos
-        last update          : October 6th, 2025
+        last update          : October 7th, 2025 - added Import FocalLengthIn35mm field
         begin                : February 2018
         copyright            : (C) 2019 by KIOS Research Center
         email                : mariosmsk@gmail.com
@@ -17,7 +17,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- JUST ADDING A LINE TO CHECK CHECK
 """
 
 import json
